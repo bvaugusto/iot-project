@@ -33,20 +33,10 @@ package:
     - _warmup/**
     - _optimize/**
 
-resources:
-  - ${file(resources/serverless/ses.yml)}
-
 functions:
   index:
     handler: src/index.handler
     environment:
-      ZOOP_MARKETPLACE_ID: ${env:ZOOP_MARKETPLACE_ID}
-      ZOOP_AUTHORIZATION_TOKEN: ${env:ZOOP_AUTHORIZATION_TOKEN}
-      BASIC_AUTHORIZATION: ${env:BASIC_AUTHORIZATION}
-      PARCELA_NAME: ${env:PARCELA_NAME}
-      PARCELA_LOGO: ${env:PARCELA_LOGO}
-      PARCELA_BASE_URL: ${env:PARCELA_BASE_URL}
-      WRAPPER_BASE_URL: ${env:WRAPPER_BASE_URL}
       FIREBASE_API_KEY: ${env:FIREBASE_API_KEY}
       FIREBASE_AUTH_DOMAIN: ${env:FIREBASE_AUTH_DOMAIN}
       FIREBASE_DATABASE_URL: ${env:FIREBASE_DATABASE_URL}
