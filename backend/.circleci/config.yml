@@ -1,21 +1,13 @@
 # ~/backend/.circleci/config.yml
 version: 2.1
 orbs:
-  cypress: cypress-io/cypress@1.10.0
-  node: circleci/node@1.1.6
-jobs:
-  build-and-test:
-    working_directory: ~/iot-project/backend
-    executor:
-      name: node/default
-    steps:
-      - checkout
-      - node/with-cache:
-          steps:
-            - run: yarn
-            - run: serverless config credentials --stage dev --provider aws --key ${AWS_ACCESS_KEY_ID} --secret ${AWS_SECRET_ACCESS_KEY}
-            - run: serverless deploy --stage dev
+  cypress: cypress-io/cypress@1
 workflows:
-    build-and-test:
-      jobs:
-        - build-and-test
+  build:
+    jobs:
+      - cypress/run:
+        yarn: true
+        steps:
+          - run: yarn
+          - run: serverless config credentials --stage dev --provider aws --key ${AWS_ACCESS_KEY_ID} --secret ${AWS_SECRET_ACCESS_KEY}
+          - run: serverless deploy --stage dev
