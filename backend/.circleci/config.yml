@@ -3,7 +3,7 @@ version: 2.1
 orbs:
   node: circleci/node@1.1.6
 jobs:
-  build-and-test:
+  build:
     working_directory: ~/backend/
     executor:
       name: node/default
@@ -15,6 +15,6 @@ jobs:
             - run: serverless config credentials --stage dev --provider aws --key ${AWS_ACCESS_KEY_ID} --secret ${AWS_SECRET_ACCESS_KEY}
             - run: serverless deploy --stage dev
 workflows:
-    build-and-test:
+    build:
       jobs:
-        - build-and-test
+        - build
