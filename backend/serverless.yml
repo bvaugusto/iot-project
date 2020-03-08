@@ -1,0 +1,70 @@
+service: iot-project
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: ${opt:stage, env:STAGE, 'develop'}
+  region: ${opt:region, env:REGION, 'us-east-1'}
+  domainName: ${env:DOMAIN}
+  subdomainName: 'pos-api'
+  domainCert: ${env:CERT, opt:cert}
+  timeout: 300
+
+custom:
+  customDomain:
+    domainName: ${self:provider.stage}-${self:provider.subdomainName}.${self:provider.domainName}
+    basePath: ''
+    certificateName: ${self:provider.domainCert}
+    stage: ${self:provider.stage}
+    createRoute53Record: true
+  serverless-offline:
+    port: ${env:PORT}
+
+package:
+  excludeDevDependencies: true
+  exclude:
+    - .git/**
+    - test/**
+    - README.md
+    - .env*
+    - temp/**
+    - package-lock.json
+    - firebase.json
+    - _warmup/**
+    - _optimize/**
+
+resources:
+  - ${file(resources/serverless/ses.yml)}
+
+functions:
+  index:
+    handler: src/index.handler
+    environment:
+      ZOOP_MARKETPLACE_ID: ${env:ZOOP_MARKETPLACE_ID}
+      ZOOP_AUTHORIZATION_TOKEN: ${env:ZOOP_AUTHORIZATION_TOKEN}
+      BASIC_AUTHORIZATION: ${env:BASIC_AUTHORIZATION}
+      PARCELA_NAME: ${env:PARCELA_NAME}
+      PARCELA_LOGO: ${env:PARCELA_LOGO}
+      PARCELA_BASE_URL: ${env:PARCELA_BASE_URL}
+      WRAPPER_BASE_URL: ${env:WRAPPER_BASE_URL}
+      FIREBASE_API_KEY: ${env:FIREBASE_API_KEY}
+      FIREBASE_AUTH_DOMAIN: ${env:FIREBASE_AUTH_DOMAIN}
+      FIREBASE_DATABASE_URL: ${env:FIREBASE_DATABASE_URL}
+      FIREBASE_PROJECT_ID: ${env:FIREBASE_PROJECT_ID}
+      FIREBASE_MESSAGING_SENDER_ID: ${env:FIREBASE_MESSAGING_SENDER_ID}
+      FIREBASE_APP_ID: ${env:FIREBASE_APP_ID}
+      FIREBASE_APPLICATION_NAME: ${env:FIREBASE_APPLICATION_NAME}
+    events:
+    - http:
+        cors: true
+        path: '/'
+        method: any
+    - http:
+        cors: true
+        path: '{proxy+}'
+        method: any
+
+plugins:
+  - serverless-domain-manager
+  - serverless-plugin-common-excludes
+  - serverless-offline
