@@ -1,9 +1,8 @@
 # ~/backend/.circleci/config.yml
 version: 2.1
-orbs:
-  cypress: cypress-io/cypress@1
 workflows:
-  build:
+  version: 2
+  minimal:
     jobs:
       - cypress/run:
         yarn: true
