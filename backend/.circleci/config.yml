@@ -1,8 +1,8 @@
 # ~/backend/.circleci/config.yml
 version: 2.1
 orbs:
-  # cypress: cypress-io/cypress@1.10.0
-  # node: circleci/node@1.1.6
+  cypress: cypress-io/cypress@1.10.0
+  node: circleci/node@1.1.6
 jobs:
   build-and-test:
     working_directory: ~/iot-project/backend
