@@ -10,7 +10,7 @@ jobs:
       - node/with-cache:
           steps:
             - run: yarn
-            - run: erverless config credentials --stage dev --provider aws --key ${AWS_ACCESS_KEY_ID} --secret ${AWS_SECRET_ACCESS_KEY}
+            - run: serverless config credentials --stage dev --provider aws --key ${AWS_ACCESS_KEY_ID} --secret ${AWS_SECRET_ACCESS_KEY}
             - run: serverless deploy --stage dev
 workflows:
     build-and-test:
