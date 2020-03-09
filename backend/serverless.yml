@@ -22,17 +22,7 @@ custom:
 
 package:
   excludeDevDependencies: true
-  exclude:
-    - .git/**
-    - test/**
-    - README.md
-    - .env*
-    - temp/**
-    - package-lock.json
-    - firebase.json
-    - _warmup/**
-    - _optimize/**
-
+  
 functions:
   index:
     handler: src/index.handler
