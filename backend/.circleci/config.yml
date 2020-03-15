@@ -1,12 +1,21 @@
-# ~/backend/.circleci/config.yml
 version: 2.1
+jobs:
+  build:
+    docker:
+      - image: circleci/node:11.13.0-alpine
+    steps:
+      - checkout
+      - run:
+        command: 'yarn'
+
+      - run:
+        command: './node_modules/.bin/sls config credentials --provider aws --key ${AWS_ACCESS_KEY_ID} --secret ${AWS_SECRET_ACCESS_KEY}'
+
+      - run:
+        command: './node_modules/.bin/sls deploy --stage staging'
+
 workflows:
-  version: 2
-  minimal:
+  version: 2.1
+  build_and_test:
     jobs:
-      - cypress/run:
-        yarn: true
-        steps:
-          - run: yarn
-          - run: serverless config credentials --stage dev --provider aws --key ${AWS_ACCESS_KEY_ID} --secret ${AWS_SECRET_ACCESS_KEY}
-          - run: serverless deploy --stage dev
+    - build

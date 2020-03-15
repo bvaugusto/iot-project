@@ -1,0 +1,27 @@
+image: node:11.13.0-alpine
+# image: nikolaik/python-nodejs:python3.8-nodejs12-alpine
+
+pipelines:
+  branches:
+    staging:
+      - step:
+          deployment: staging
+          caches:
+            - node
+          script:
+            - yarn
+            - yarn test
+            - ./node_modules/.bin/sls config credentials --provider aws --key ${AWS_ACCESS_KEY_ID} --secret ${AWS_SECRET_ACCESS_KEY}
+            # - ./node_modules/.bin/sls create_domain --stage homolog
+            - ./node_modules/.bin/sls deploy --stage homolog
+    master:
+      - step:
+          deployment: production
+          caches:
+            - node
+          script:
+            - yarn
+            - yarn test
+            - ./node_modules/.bin/sls config credentials --provider aws --key ${AWS_ACCESS_KEY_ID} --secret ${AWS_SECRET_ACCESS_KEY}
+            # - ./node_modules/.bin/sls create_domain --stage prod
+            - ./node_modules/.bin/sls deploy --stage prod
