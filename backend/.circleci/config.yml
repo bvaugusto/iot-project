@@ -1,21 +1,15 @@
-version: 2.1
+version: 2.0
 jobs:
   build:
     docker:
       - image: circleci/node:11.13.0-alpine
     steps:
       - checkout
-      - run:
-        command: 'yarn'
-
-      - run:
-        command: './node_modules/.bin/sls config credentials --provider aws --key ${AWS_ACCESS_KEY_ID} --secret ${AWS_SECRET_ACCESS_KEY}'
-
-      - run:
-        command: './node_modules/.bin/sls deploy --stage staging'
-
+      - run: 'yarn'
+      - run: './node_modules/.bin/sls config credentials --provider aws --key ${AWS_ACCESS_KEY_ID} --secret ${AWS_SECRET_ACCESS_KEY}'
+      - run: './node_modules/.bin/sls deploy --stage staging'
 workflows:
-  version: 2.1
+  version: 2.0
   build_and_test:
     jobs:
-    - build
+      - build
