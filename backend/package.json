@@ -3,7 +3,11 @@
     "version": "0.0.0",
     "private": true,
     "scripts": {
-        "dev": "./node_modules/.bin/env-cmd -f .env ./node_modules/.bin/sls offline"
+        "dev": "./node_modules/.bin/env-cmd -f .env ./node_modules/.bin/sls offline",
+        "deploy": "sh -c './node_modules/.bin/env-cmd -f .env ./node_modules/.bin/sls deploy -v --debug --skipCacheInvalidation'",
+        "serverless-remove": "sh -c './node_modules/.bin/env-cmd -f .env ./node_modules/.bin/sls remove'",
+        "remove-domain": "./node_modules/.bin/env-cmd -f .env ./node_modules/.bin/sls delete_domain",
+        "create-domain": "sh -c './node_modules/.bin/env-cmd -f .env ./node_modules/.bin/sls create_domain --skipCacheInvalidation'"
     },
     "dependencies": {
         "awilix": "^4.2.5",

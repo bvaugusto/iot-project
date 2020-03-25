@@ -1,5 +1,6 @@
-image: node:11.13.0-alpine
+# image: node:11.13.0-alpine
 # image: nikolaik/python-nodejs:python3.8-nodejs12-alpine
+image: nikolaik/python-nodejs
 
 pipelines:
   branches:
@@ -10,10 +11,9 @@ pipelines:
             - node
           script:
             - yarn
-            - yarn test
-            - ./node_modules/.bin/sls config credentials --provider aws --key ${AWS_ACCESS_KEY_ID} --secret ${AWS_SECRET_ACCESS_KEY}
-            # - ./node_modules/.bin/sls create_domain --stage homolog
-            - ./node_modules/.bin/sls deploy --stage homolog
+            - ./node_modules/.bin/sls config credentials -v --provider aws --key ${AWS_ACCESS_KEY_ID} --secret ${AWS_SECRET_ACCESS_KEY}
+            - ./node_modules/.bin/sls create_domain -v --stage homolog
+            - ./node_modules/.bin/sls deploy -v --stage homolog
     master:
       - step:
           deployment: production
@@ -21,7 +21,6 @@ pipelines:
             - node
           script:
             - yarn
-            - yarn test
-            - ./node_modules/.bin/sls config credentials --provider aws --key ${AWS_ACCESS_KEY_ID} --secret ${AWS_SECRET_ACCESS_KEY}
-            # - ./node_modules/.bin/sls create_domain --stage prod
-            - ./node_modules/.bin/sls deploy --stage prod
+            - ./node_modules/.bin/sls config credentials -v --provider aws --key ${AWS_ACCESS_KEY_ID} --secret ${AWS_SECRET_ACCESS_KEY}
+            - ./node_modules/.bin/sls create_domain -v --stage prod
+            - ./node_modules/.bin/sls deploy -v --stage prod

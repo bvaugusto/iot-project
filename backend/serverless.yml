@@ -8,7 +8,11 @@ provider:
   domainName: ${env:DOMAIN}
   subdomainName: 'pos-api'
   domainCert: ${env:CERT, opt:cert}
-  timeout: 300
+  timeout: 29
+
+  environment:
+    SLS_DEBUG: "*"
+    SERVICE_NAME: ${self:service}
 
 custom:
   customDomain:
@@ -17,6 +21,8 @@ custom:
     certificateName: ${self:provider.domainCert}
     stage: ${self:provider.stage}
     createRoute53Record: true
+    endpointType: ${env:ENDPOINT_TYPE}
+    hostedZoneId: ${env:HOSTED_ZONE_ID}
   serverless-offline:
     port: ${env:PORT}
 

@@ -1,12 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/students', async(req, res) => {
-    return await req.container.resolve('studentController').get(req, res);
-});
-
-router.post('/students', async(req, res) => {
-    return await req.container.resolve('studentController').post(req, res);
+router.post('/devices', async(req, res) => {
+    return await req.container.resolve('deviceController').post(req, res);
 });
 
 module.exports = router;
