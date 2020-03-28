@@ -3,7 +3,8 @@ const awilix = require('awilix');
 const { createContainer, asClass, asValue, InjectionMode } = awilix;
 
 const Firebase = require('../app/services/firebase');
-const studentRepository = require('../app/repositories/students.repository');
+const authRepository = require('../app/repositories/auth.repository');
+const deviceRepository = require('../app/repositories/device.repository');
 
 const configClients = {
     apiKey: process.env.FIREBASE_API_KEY,
@@ -24,8 +25,11 @@ const container = createContainer({
 
 container.register({
     db: asValue(clientConnection.db),
+    auth: asValue(clientConnection.auth),
+    firestore: asValue(clientConnection.firestore),
     connection: asValue(clientConnection),
-    studentRepository: asClass(studentRepository).scoped(),
+    authRepository: asClass(authRepository).scoped(),
+    deviceRepository: asClass(deviceRepository).scoped(),
 });
 
 module.exports = container;

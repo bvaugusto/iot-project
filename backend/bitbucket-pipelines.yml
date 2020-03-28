@@ -1,5 +1,3 @@
-# image: node:11.13.0-alpine
-# image: nikolaik/python-nodejs:python3.8-nodejs12-alpine
 image: nikolaik/python-nodejs
 
 pipelines:

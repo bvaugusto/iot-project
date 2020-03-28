@@ -6,28 +6,28 @@ const Firebase = require('../services/firebase');
 module.exports = async(req, res, next) => {
 
     // repositories
-    const StudentRepository = require('../repositories/students.repository');
-    const DeviceRepository = require('../repositories/devices.repository');
+    const AuthRepository = require('../repositories/auth.repository');
+    const DeviceRepository = require('../repositories/device.repository');
 
     // services
-    const StudentService = require('../services/student');
+    const AuthService = require('../services/auth');
     const DeviceService = require('../services/device');
 
     // controllers
-    const StudentController = require('../controller/student.controller');
+    const AuthController = require('../controller/auth.controller');
     const DeviceController = require('../controller/device.controller');
 
     let dependencies = {
         // Repository
-        studentRepository: asClass(StudentRepository).scoped(),
+        authRepository: asClass(AuthRepository).scoped(),
         deviceRepository: asClass(DeviceRepository).scoped(),
 
         // Service
-        studentService: asClass(StudentService).scoped(),
+        authService: asClass(AuthService).scoped(),
         deviceService: asClass(DeviceService).scoped(),
 
         // Controller
-        studentController: asClass(StudentController).scoped(),
+        AuthController: asClass(AuthController).scoped(),
         deviceController: asClass(DeviceController).scoped(),
     };
 

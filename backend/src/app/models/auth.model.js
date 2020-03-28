@@ -2,14 +2,12 @@
 
 const BaseModel = require('./base.model');
 
-const Model = BaseModel({
-    name: String
-});
+const Model = BaseModel({});
 
-class StudentModel extends Model {
+class AuthModel extends Model {
     constructor(student) {
         super(student);
     }
 }
 
-module.exports = StudentModel;
+module.exports = AuthModel;
