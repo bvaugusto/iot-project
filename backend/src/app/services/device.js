@@ -17,6 +17,10 @@ function calculatePresence(paramsPresence, diffDate) {
     const missingQty = (qty_class * diffDate) / totalClassMinutes;
     const trunkMissingQty = Math.trunc(missingQty);
 
+    if (trunkMissingQty >= qty_class) {
+        trunkMissingQty = qty_class
+    }
+
     return (trunkMissingQty || 0);
 }
 
