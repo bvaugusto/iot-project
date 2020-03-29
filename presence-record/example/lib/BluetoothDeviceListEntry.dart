@@ -9,8 +9,6 @@ class BluetoothDeviceListEntry extends ListTile {
     // GestureLongPressCallback onLongPress,
     bool enabled = true,
   }) : super(
-          // onTap: onTap,
-          // onLongPress: onLongPress,
           enabled: enabled,
           leading:
               Icon(Icons.devices), // @TODO . !BluetoothClass! class aware icon

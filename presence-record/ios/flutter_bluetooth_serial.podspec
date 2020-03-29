@@ -2,11 +2,11 @@
 # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html
 #
 Pod::Spec.new do |s|
-  s.name             = 'flutter_bluetooth_serial'
+  s.name             = 'attendance_list'
   s.version          = '0.0.1'
-  s.summary          = 'A basic Flutter Bluetooth Serial'
+  s.summary          = 'A basic Presence Record'
   s.description      = <<-DESC
-A basic Flutter Bluetooth Serial
+A basic Presence Record
                        DESC
   s.homepage         = 'http://example.com'
   s.license          = { :file => '../LICENSE' }

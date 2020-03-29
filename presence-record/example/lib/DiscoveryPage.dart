@@ -1,10 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
-
 import './BluetoothDeviceListEntry.dart';
 import 'package:http/http.dart' as http;
-
 import 'dart:convert';
 
 class DiscoveryPage extends StatefulWidget {
