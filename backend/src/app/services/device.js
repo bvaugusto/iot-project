@@ -15,23 +15,14 @@ function calculatePresence(paramsPresence, diffDate) {
     const { minute_class, qty_class } = paramsPresence;
     const totalClassMinutes = minute_class * qty_class;
     const missingQty = (qty_class * diffDate) / totalClassMinutes;
+    const trunkMissingQty = Math.trunc(missingQty);
 
-    return Math.trunc(missingQty);
+    return (trunkMissingQty || 0);
 }
 
 class DeviceService {
     constructor(deviceRepository) {
         this.deviceRepository = deviceRepository;
-    }
-    
-    async createDevice() {
-        const student = this.deviceRepository.getClients();
-        return student;
-    }
-
-    async getDevice(address) {
-        const device = this.deviceRepository.getDevice();
-        return device;
     }
 
     async fetchDevice(address) {
@@ -58,7 +49,7 @@ class DeviceService {
         const register = await this.deviceRepository.registrationPresence(rssi, device);
         return register;
     }
-    
+
     async updatePresence(deviceId) {
         const countRegister = await this.deviceRepository.countRegister(deviceId);
 
@@ -69,12 +60,10 @@ class DeviceService {
         const finalDate = convertTimestampToDate(finalData.created_at.seconds);
 
         const diffDate = diffDateReturnMinute(finalDate, initialDate);
-
         const paramsPresence = await this.deviceRepository.getParamsDatePresence(deviceId);
         const missingQty = calculatePresence(paramsPresence, diffDate);
-
         const register = await this.deviceRepository.updatePresence(deviceId, missingQty);
-        
+
         return register;
     }
 }

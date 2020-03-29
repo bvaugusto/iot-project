@@ -3,7 +3,9 @@
 const FieldValue = require('firebase').firestore.FieldValue;
 
 function getCurrentDate() {
-    const currentDate = new Date();
+    const timestamp = new Date().getTime();
+    const currentDate = new Date(timestamp);
+
     const date = currentDate.getDate();
     const month = currentDate.getMonth();
     const year = currentDate.getFullYear();
@@ -34,15 +36,16 @@ class DeviceRepository {
     }
 
     async fetchDevice(address) {
-        const deviceSnapshot = await this.db
-            .collection('devices')
-            .where('bd_addr', '==', address)
-            .limit(1)
-            .get();
+        const ref = this.db.collection('devices');
 
-        const deviceId = deviceSnapshot.docs.map(device => device.id);
-
-        return deviceId[0];
+        return await ref.where('bd_addr', '==', address)
+            .get()
+            .then(querySnapshot => {
+                if (querySnapshot.size) {
+                    return querySnapshot.docs[0].id
+                }
+                return false;
+            });
     }
 
     async registrationDevice(address, name) {
@@ -65,7 +68,7 @@ class DeviceRepository {
         const snapshotMountParametherPresence = createSnapshotDatePresence(this.db, deviceId);
 
         return snapshotMountParametherPresence
-            .set({ ...parameters })
+            .set({...parameters })
             .then(ref => {
                 return ref
             });
@@ -76,7 +79,8 @@ class DeviceRepository {
         const snapshotRegistrationPresence = createSnapshotRegister(this.db, deviceId);
 
         return snapshotRegistrationPresence.add({
-            rssi, created_at: serverTimestamp
+            rssi,
+            created_at: serverTimestamp
         }).then(ref => {
             return ref.id;
         });
@@ -91,7 +95,7 @@ class DeviceRepository {
     async searchDataByPosition(deviceId, position) {
 
         const snapshotSearchDataByPosition = createSnapshotRegister(this.db, deviceId);
-        
+
         return snapshotSearchDataByPosition.orderBy("created_at", "asc")
             .get()
             .then(querySnapshot => {
@@ -105,15 +109,18 @@ class DeviceRepository {
 
     async getParamsDatePresence(deviceId) {
         const snapshotParamsDatePserence = createSnapshotDatePresence(this.db, deviceId);
-        
-        return snapshotParamsDatePserence.onSnapshot((doc) => doc.data());
+
+        return await snapshotParamsDatePserence.get()
+            .then(doc => {
+                return doc.data()
+            });
     }
 
     async updatePresence(deviceId, missingQty) {
         const snapshotParamsDatePserence = createSnapshotDatePresence(this.db, deviceId);
 
         return snapshotParamsDatePserence.set({
-            missing_qty: (missingQty || 0)
+            missing_qty: missingQty
         }, { merge: true });
     }
 }

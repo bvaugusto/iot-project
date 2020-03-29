@@ -12,9 +12,9 @@ class DeviceController {
 
         try {
             await this.authService.signInAnonymously();
-            
+
             let deviceId = await this.deviceService.fetchDevice(address);
-            if (deviceId === undefined) {
+            if (!deviceId) {
                 deviceId = await this.deviceService.registrationDevice(address, name);
             }
 
@@ -27,7 +27,7 @@ class DeviceController {
             await this.deviceService.registrationPresence(rssi, deviceId);
             await this.deviceService.updatePresence(deviceId);
 
-            return res.status(200).send({ message: 'Registro realizado com sucesso!'});
+            return res.status(200).send({ message: 'Registro realizado com sucesso!' });
         } catch (error) {
             return res.status(404).send({ message: error.message });
         }
