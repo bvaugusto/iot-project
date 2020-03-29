@@ -25,7 +25,6 @@ apt install awscli
 Install [flutter](https://flutter.dev/docs/get-started/install)
 
 
-
 ### Backend
 
 [Open folder backend](./backend)
@@ -76,3 +75,5 @@ pub get
 # or with Flutter
 flutter pub get
 ```
+## Presentation
+[![PresenceRecord](https://img.youtube.com/vi/KQ1s1QeWKZQ/0.jpg)](https://youtu.be/KQ1s1QeWKZQ)
